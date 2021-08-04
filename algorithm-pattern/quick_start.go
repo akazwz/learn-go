@@ -3,14 +3,18 @@ package main
 import "fmt"
 
 func main() {
-	index := indexOf("this is stack", "ck")
+	index := strStr("this is stack", "ck")
 	fmt.Println(index)
 }
 
 // strStr 28
-func indexOf(haystack, needle string) int {
+func strStr(haystack, needle string) int {
 	if len(needle) == 0 {
 		return 0
+	}
+
+	if len(needle) > len(haystack) {
+		return -1
 	}
 
 	var i, j int
