@@ -34,19 +34,12 @@ func main() {
 			},
 		},
 	}
-	//preorderTraversal(&tree)
-	depth := maxDepth(&tree)
-	fmt.Println(depth)
-}
-
-// 前序递归
-func preorderTraversal(root *TreeNode) {
-	if root == nil {
-		return
-	}
-	fmt.Println(root.Val)
-	preorderTraversal(root.Left)
-	preorderTraversal(root.Right)
+	_ = maxDepth(&tree)
+	result := make([]int, 0)
+	resultRe := preorderTraversal(&tree, &result)
+	resultNoRe := preorderTraversalNoRecursive(&tree)
+	fmt.Println(resultRe)
+	fmt.Println(resultNoRe)
 }
 
 // 104 4ms 90.80%
@@ -61,4 +54,39 @@ func maxDepth(root *TreeNode) int {
 		return left + 1
 	}
 	return right + 1
+}
+
+// 前序递归
+func preorderTraversal(root *TreeNode, result *[]int) []int {
+	if root == nil {
+		return nil
+	}
+	*result = append(*result, root.Val)
+	preorderTraversal(root.Left, result)
+	preorderTraversal(root.Right, result)
+	return *result
+}
+
+// 前序非递归
+func preorderTraversalNoRecursive(root *TreeNode) []int {
+	if root == nil {
+		return nil
+	}
+
+	result := make([]int, 0)
+	stack := make([]*TreeNode, 0)
+
+	for root != nil || len(stack) != 0 {
+		for root != nil {
+			result = append(result, root.Val)
+			stack = append(stack, root)
+			root = root.Left
+		}
+		// pop
+		node := stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
+		root = node.Right
+	}
+
+	return result
 }
