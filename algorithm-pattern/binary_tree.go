@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type TreeNode struct {
 	Val   int
@@ -9,12 +11,32 @@ type TreeNode struct {
 }
 
 func main() {
+	// https://assets.leetcode.com/uploads/2020/11/26/tmp-tree.jpg
+	// [3,9,20,null,null,15,7]
 	tree := TreeNode{
-		Val:   0,
-		Left:  nil,
-		Right: nil,
+		Val: 3,
+		Left: &TreeNode{
+			Val:   9,
+			Left:  nil,
+			Right: nil,
+		},
+		Right: &TreeNode{
+			Val: 20,
+			Left: &TreeNode{
+				Val:   15,
+				Left:  nil,
+				Right: nil,
+			},
+			Right: &TreeNode{
+				Val:   7,
+				Left:  nil,
+				Right: nil,
+			},
+		},
 	}
-	preorderTraversal(&tree)
+	//preorderTraversal(&tree)
+	depth := maxDepth(&tree)
+	fmt.Println(depth)
 }
 
 // 前序递归
