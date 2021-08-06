@@ -90,3 +90,20 @@ func preorderTraversalNoRecursive(root *TreeNode) []int {
 
 	return result
 }
+
+// DFS 深度搜索 从上到下
+func preorderTraversalDfsUpToDown(root *TreeNode) []int {
+	result := make([]int, 0)
+	dfs(root, &result)
+	return result
+}
+
+// 传入指针
+func dfs(root *TreeNode, result *[]int) {
+	if root == nil {
+		return
+	}
+	*result = append(*result, root.Val)
+	dfs(root.Left, result)
+	dfs(root.Right, result)
+}
