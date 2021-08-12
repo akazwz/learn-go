@@ -107,3 +107,29 @@ func dfs(root *TreeNode, result *[]int) {
 	dfs(root.Left, result)
 	dfs(root.Right, result)
 }
+
+// 110 平衡二叉树    4 ms, faster than 95.22%
+func isBalanced(root *TreeNode) bool {
+	if maxDepthBalanced(root) == -1 {
+		return false
+	}
+	return true
+}
+
+func maxDepthBalanced(root *TreeNode) int {
+	// check
+	if root == nil {
+		return 0
+	}
+	left := maxDepthBalanced(root.Left)
+	right := maxDepthBalanced(root.Right)
+
+	// 高度差大于1 返回 -1
+	if left == -1 || right == -1 || left-right > 1 || right-left > 1 {
+		return -1
+	}
+	if left > right {
+		return left + 1
+	}
+	return right + 1
+}
