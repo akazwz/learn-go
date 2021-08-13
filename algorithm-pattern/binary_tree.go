@@ -133,3 +133,79 @@ func maxDepthBalanced(root *TreeNode) int {
 	}
 	return right + 1
 }
+
+// 124 二叉树中的最大路径和  16 ms, faster than 87.97%
+// Binary Tree Maximum Path Sum
+
+// ResultType 保存最大值
+type ResultType struct {
+	SinglePath int //单边最大值
+	MaxPath    int // 最大值
+}
+
+func maxPathSum(root *TreeNode) int {
+	result := helper(root)
+	return result.MaxPath
+}
+
+func helper(root *TreeNode) ResultType {
+	// root为空
+	if root == nil {
+		return ResultType{
+			SinglePath: 0,
+			MaxPath:    -(1 << 31),
+		}
+	}
+	// 分治
+	left := helper(root.Left)
+	right := helper(root.Right)
+
+	result := ResultType{}
+	// 求单边最大值
+	if left.SinglePath > right.SinglePath {
+		result.SinglePath = maxInt(left.SinglePath+root.Val, 0)
+	} else {
+		result.SinglePath = maxInt(right.SinglePath+root.Val, 0)
+	}
+	// 求两遍加根最大值
+	maxPath := maxInt(left.MaxPath, right.MaxPath)
+	result.MaxPath = maxInt(maxPath, left.SinglePath+right.SinglePath+root.Val)
+	return result
+}
+
+func maxInt(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
+// 236.二叉树的最近公共祖先
+// lowest-common-ancestor-of-a-binary-tree
+func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
+	// 是否为空
+	if root == nil {
+		return root
+	}
+
+	// 相等
+	if root == p || root == q {
+		return root
+	}
+
+	// 分治
+	left := lowestCommonAncestor(root.Left, p, q)
+	right := lowestCommonAncestor(root.Right, p, q)
+
+	// 左右两边都不为空,则根节点为祖先
+	if left != nil && right != nil {
+		return root
+	}
+	if left != nil {
+		return left
+	}
+	if right != nil {
+		return right
+	}
+	return nil
+}
