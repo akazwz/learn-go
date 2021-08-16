@@ -180,7 +180,7 @@ func maxInt(a, b int) int {
 	return b
 }
 
-// 236.二叉树的最近公共祖先
+// 236.二叉树的最近公共祖先 4 ms, faster than 99.83%
 // lowest-common-ancestor-of-a-binary-tree
 func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
 	// 是否为空
