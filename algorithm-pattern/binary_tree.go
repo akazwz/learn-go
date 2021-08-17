@@ -238,3 +238,17 @@ func levelOrder(root *TreeNode) [][]int {
 	}
 	return result
 }
+
+// 107. 二叉树的层序遍历 II 0 ms, faster than 100.00%
+// 107. Binary Tree Level Order Traversal II
+func levelOrderBottom(root *TreeNode) [][]int {
+	result := levelOrder(root)
+	// 翻转结果
+	reverse(result)
+	return result
+}
+func reverse(nums [][]int) {
+	for i, j := 0, len(nums)-1; i < j; i, j = i+1, j-1 {
+		nums[i], nums[j] = nums[j], nums[i]
+	}
+}
