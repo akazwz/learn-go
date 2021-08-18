@@ -252,3 +252,44 @@ func reverse(nums [][]int) {
 		nums[i], nums[j] = nums[j], nums[i]
 	}
 }
+
+// 103. 二叉树的锯齿形层序遍历 0 ms, faster than 100.00%
+// Binary Tree Zigzag Level Order Traversal
+func zigzagLevelOrder(root *TreeNode) [][]int {
+	result := make([][]int, 0)
+	if root == nil {
+		return result
+	}
+	queue := make([]*TreeNode, 0)
+	queue = append(queue, root)
+	toggle := false
+	for len(queue) > 0 {
+		list := make([]int, 0)
+		// 记录当前层有多少元素（遍历当前层，再添加下一层）
+		l := len(queue)
+		for i := 0; i < l; i++ {
+			// 出队列
+			level := queue[0]
+			queue = queue[1:]
+			list = append(list, level.Val)
+			if level.Left != nil {
+				queue = append(queue, level.Left)
+			}
+			if level.Right != nil {
+				queue = append(queue, level.Right)
+			}
+		}
+		if toggle {
+			reverseOne(list)
+		}
+		result = append(result, list)
+		toggle = !toggle
+	}
+	return result
+}
+
+func reverseOne(nums []int) {
+	for i := 0; i < len(nums)/2; i++ {
+		nums[i], nums[len(nums)-1-i] = nums[len(nums)-1-i], nums[i]
+	}
+}
